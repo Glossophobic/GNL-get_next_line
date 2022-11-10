@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 13:50:05 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/10 15:35:21 by oubelhaj         ###   ########.fr       */
+/*   Created: 2022/11/10 13:49:21 by oubelhaj          #+#    #+#             */
+/*   Updated: 2022/11/10 15:28:08 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,7 @@ char	*get_next_line(int fd)
 	}
 	line = ft_substr(str[fd], 0, ft_strchr(str[fd], '\n') - str[fd] + 1);
 	tmp = str[fd];
-	str[fd] = ft_substr(ft_strchr(str[fd], '\n') + 1, 0, ft_strlen(ft_strchr(str[fd], '\n') + 1));
+	str[fd] = ft_substr(ft_strchr(str[fd], '\n') + 1, 0, ft_strchr(str[fd], 0) - str[fd]);
 	free(tmp);
 	return (line);
-}
-#include <fcntl.h>
-int main()
-{
-	int fd = open("new.c", O_CREAT | O_RDWR);
-	write(fd, "Hello\nWorld\nskdjfhsdkfjhsdfksdfs\ndskfjhsdkfjhdskfjhsdkfjsdhfhdksjfhdhdsf\n", 137);
-	get_next_line(fd);
 }
