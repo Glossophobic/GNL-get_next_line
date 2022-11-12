@@ -6,110 +6,81 @@
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:49:57 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/10 15:42:30 by oubelhaj         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:04:51 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (!str)
-		return(0);
+		return (0);
 	while (str[i])
 		i++;
 	return (i);
 }
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int				i;
-	unsigned char	*pdst;
-	unsigned char	*psrc;
+	char	*psrc;
+	char	*pdest;
 
-	i = 0;
-	pdst = (unsigned char *)dst;
-	psrc = (unsigned char *)src;
-	if (dst > src)
-	{
-		i = len - 1;
-		while (i >= 0)
-		{
-			pdst[i] = psrc[i];
-			i--;
-		}
-	}
-	else if (dst < src)
-	{
-		ft_memcpy(dst, src, len);
-	}
-	return (dst);
-}
-
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	unsigned char	*psrc;
-	unsigned char	*pdest;
-
-	psrc = (unsigned char *)src;
-	pdest = (unsigned char *)dest;
-	if (!src && !dest)
+	psrc = (char *)src;
+	pdest = (char *)dst;
+	if (!src && !dst)
 		return (NULL);
 	while (n > 0)
 	{
 		*pdest++ = *psrc++;
 		n--;
 	}
-	return (dest);
+	return (dst);
+}
+
+char	*ft_strchr(char *buff, char c)
+{
+	if (buff != NULL)
+	{
+		while (*buff && *buff != c)
+			buff++;
+		if (*buff == c)
+			return (buff);
+	}
+	return (NULL);
 }
 
 char	*ft_strjoin(char *s1, char const *s2)
 {
+	size_t	s1len;
+	size_t	s2len;
 	char	*str;
-	int		s1_len;
-	int		s2_len;
 
-	if (!s1 || !s2)
-		return (0);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	str = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	s1len = ft_strlen(s1);
+	s2len = ft_strlen((char *)s2);
+	str = malloc((s1len + s2len + 1) * sizeof(char));
 	if (!str)
-		return (0);
-	ft_memmove(str, s1, s1_len);
-	ft_memmove(str + s1_len, s2, s2_len + 1);
+		return (NULL);
+	ft_memcpy(str, s1, s1len);
+	ft_memcpy(str + s1len, s2, s2len);
+	str[s1len + s2len] = '\0';
+	free(s1);
 	return (str);
 }
 
-char	*ft_strchr(char *str, int c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == (char)c)
-			return ((char *)&str[i]);
-		i++;
-	}
-	if (str[i] == (char)c)
-		return (&str[i]);
-	return (0);
-}
-
-char	*get_buffer(int fd)
+char	*fill_buff(int fd)
 {
 	char	*buff;
-	ssize_t	rbytes;
+	ssize_t	rd_bytes;
 
-	buff = malloc(BUFFER_SIZE + 1);
-	rbytes = read(fd, buff, BUFFER_SIZE);
-	if (rbytes > 0 && rbytes <= BUFFER_SIZE)
+	buff = malloc(BUFFER_SIZE + 1); // // Temporary array that will hold a string read with the amount of BUFFER_SIZE & Will be joined with saved string
+	rd_bytes = read(fd, buff, BUFFER_SIZE);
+	if (rd_bytes > 0 && rd_bytes <= BUFFER_SIZE)
 	{
-		buff[rbytes] = 0;
+		buff[rd_bytes] = '\0';
 		return (buff);
 	}
 	free(buff);
@@ -118,33 +89,16 @@ char	*get_buffer(int fd)
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	i;
-	size_t	rem;
-	size_t	s_len;
-	char	*substr;
+	char	*sub;
 
-	i = 0;
-	if (!s)
-		return (0);
-	s_len = ft_strlen(s);
-	if (start >= s_len)
-		rem = 0;
-	else if (s_len - start < len)
-		rem = s_len - start;
-	else
-		rem = len;
-	substr = malloc(sizeof(char) * rem + 1);
-	if (!substr)
-		return (0);
-	while (i < rem)
-		substr[i++] = s[start++];
-	substr[i] = '\0';
-	return (substr);
-}
-
-char	*protection(char *buffer, int fd)
-{
-	if (fd < 0)
-		return (0);
-	return (buffer);
+	if (len > (size_t)(ft_strchr((char *)s + start, '\0') - s + start))
+		len = ft_strchr((char *)s + start, '\0') - s + start;
+	if (len <= 0 || !s)
+		return (NULL);
+	sub = (char *)malloc((len + 1) * sizeof(char));
+	if (!sub)
+		return (NULL);
+	ft_memcpy(sub, s + start, len);
+	sub[len] = 0;
+	return (sub);
 }
