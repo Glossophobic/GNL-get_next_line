@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/13 17:06:56 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/15 21:20:11 by oubelhaj         ###   ########.fr       */
+/*   Created: 2022/11/15 21:21:57 by oubelhaj          #+#    #+#             */
+/*   Updated: 2022/11/15 21:35:06 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
@@ -51,31 +51,3 @@ char	*get_next_line(int fd)
 	free(tmp);
 	return (line);
 }
-// int main()
-// {
-// 	int fd;
-
-// 	fd = open("sekiro.txt", O_RDONLY);
-
-// 	char *s;
-// 	char *s1;
-// 	char *s2;
-// 	char *s3;
-// 	char *s4;
-	
-// 	s = get_next_line(-1);
-// 	printf("%s\n", s);
-// 	free(s);
-// 	s = get_next_line(fd);
-// 	printf("%s\n", s);
-// 	free(s);
-// 	s = get_next_line(fd);
-// 	printf("%s\n", s);
-// 	free(s);
-// 	s = get_next_line(fd);
-// 	printf("%s\n", s);
-// 	free(s);
-// 	s = get_next_line(fd);
-// 	printf("%s\n", s);
-// 	free(s);
-// }

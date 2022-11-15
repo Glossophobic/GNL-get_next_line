@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 13:49:57 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/15 21:36:07 by oubelhaj         ###   ########.fr       */
+/*   Created: 2022/11/15 21:21:34 by oubelhaj          #+#    #+#             */
+/*   Updated: 2022/11/15 21:26:13 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *str)
 {
@@ -83,7 +83,7 @@ char	*fill_buff(int *fd)
 		buff[rd_bytes] = '\0';
 		return (buff);
 	}
-	if (rd_bytes < 0)
+	if(rd_bytes < 0)
 		*fd = -1;
 	free(buff);
 	return (NULL);
