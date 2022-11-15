@@ -6,7 +6,7 @@
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:49:57 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/15 21:36:07 by oubelhaj         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:16:02 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,6 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	char	*psrc;
-	char	*pdest;
-
-	psrc = (char *)src;
-	pdest = (char *)dst;
-	if (!src && !dst)
-		return (NULL);
-	while (n > 0)
-	{
-		*pdest++ = *psrc++;
-		n--;
-	}
-	return (dst);
-}
-
 char	*ft_strchr(char *buff, char c)
 {
 	if (buff != NULL)
@@ -55,17 +38,28 @@ char	*ft_strchr(char *buff, char c)
 
 char	*ft_strjoin(char *s1, char const *s2)
 {
+	size_t	i;
 	size_t	s1len;
 	size_t	s2len;
 	char	*str;
 
+	i = 0;
 	s1len = ft_strlen(s1);
-	s2len = ft_strlen((char *)s2);
-	str = malloc((s1len + s2len + 1) * sizeof(char));
+	s2len = ft_strlen(s2);
+	str = malloc(s1len + s2len + 1);
 	if (!str)
 		return (NULL);
-	ft_memcpy(str, s1, s1len);
-	ft_memcpy(str + s1len, s2, s2len);
+	while (i < s1len)
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	i = 0;
+	while (i < s2len)
+	{
+		str[i + s1len] = s2[i];
+		i++;
+	}
 	str[s1len + s2len] = '\0';
 	free(s1);
 	return (str);
@@ -83,7 +77,7 @@ char	*fill_buff(int *fd)
 		buff[rd_bytes] = '\0';
 		return (buff);
 	}
-	if (rd_bytes < 0)
+	if(rd_bytes < 0)
 		*fd = -1;
 	free(buff);
 	return (NULL);
@@ -93,7 +87,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
 	size_t	rem;
+	size_t	i;
 
+	i = 0;
 	rem = ft_strlen(s + start);
 	if (len > rem)
 		len = rem;
@@ -102,7 +98,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	sub = (char *)malloc((len + 1) * sizeof(char));
 	if (!sub)
 		return (NULL);
-	ft_memcpy(sub, s + start, len);
+	while (i < len)
+	{
+		sub[i] = (s + start)[i];
+		i++;
+	}
 	sub[len] = 0;
 	return (sub);
 }

@@ -6,7 +6,7 @@
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:06:56 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/15 21:20:11 by oubelhaj         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:15:11 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 char	*get_next_line(int fd)
 {
-	char		*line;
-	static char	*saved[OPEN_MAX];
-	char		*buff;
 	char		*tmp;
+	char		*line;
+	char		*buff;
+	static char	*saved[OPEN_MAX];
 
-	if (read(fd, NULL, 0) == -1)
+	if (read(fd, NULL, 0) == -1) // to check if the fd is valid
 	{
-		if(fd != -1)
-			free(saved[fd]);
-		saved[fd] = NULL;
-		return NULL;
+		if (fd != -1)
+			free(saved[fd]); // free stuff from previous calls
+		saved[fd] = NULL; // why
+		return (NULL);
 	}
 	while (!ft_strchr(saved[fd], '\n'))
 	{
@@ -44,7 +44,8 @@ char	*get_next_line(int fd)
 		saved[fd] = ft_strjoin(saved[fd], buff);
 		free(buff);
 	}
-	line = ft_substr(saved[fd], 0, ft_strchr(saved[fd], '\n') - saved[fd] + 1);
+	line = ft_substr(saved[fd],
+		0, ft_strchr(saved[fd], '\n') - saved[fd] + 1);
 	tmp = saved[fd];
 	saved[fd] = ft_substr(ft_strchr(saved[fd], '\n') + 1,
 		0, ft_strlen(ft_strchr(saved[fd], '\n')));

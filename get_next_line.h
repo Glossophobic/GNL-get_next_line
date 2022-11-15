@@ -6,7 +6,7 @@
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:50:16 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/15 21:03:46 by oubelhaj         ###   ########.fr       */
+/*   Updated: 2022/11/16 00:16:24 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <unistd.h>
-#include <string.h>
+# include <string.h>
 
 char	*fill_buff(int *fd);
 size_t	ft_strlen(const char *str);
