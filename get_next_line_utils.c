@@ -6,13 +6,13 @@
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:49:57 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/12 17:04:51 by oubelhaj         ###   ########.fr       */
+/*   Updated: 2022/11/15 01:34:35 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *str)
+size_t	ft_strlen(const char *str)
 {
 	int	i;
 
@@ -71,18 +71,20 @@ char	*ft_strjoin(char *s1, char const *s2)
 	return (str);
 }
 
-char	*fill_buff(int fd)
+char	*fill_buff(int fd, char *saved)
 {
 	char	*buff;
 	ssize_t	rd_bytes;
 
-	buff = malloc(BUFFER_SIZE + 1); // // Temporary array that will hold a string read with the amount of BUFFER_SIZE & Will be joined with saved string
+	buff = malloc(BUFFER_SIZE + 1);
 	rd_bytes = read(fd, buff, BUFFER_SIZE);
-	if (rd_bytes > 0 && rd_bytes <= BUFFER_SIZE)
+	if (rd_bytes > 0)
 	{
 		buff[rd_bytes] = '\0';
 		return (buff);
 	}
+	else if (rd_bytes == -1)
+		free(saved);
 	free(buff);
 	return (NULL);
 }
@@ -90,9 +92,11 @@ char	*fill_buff(int fd)
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
+	size_t	rem;
 
-	if (len > (size_t)(ft_strchr((char *)s + start, '\0') - s + start))
-		len = ft_strchr((char *)s + start, '\0') - s + start;
+	rem = ft_strlen(s + start);
+	if (len > rem)
+		len = rem;
 	if (len <= 0 || !s)
 		return (NULL);
 	sub = (char *)malloc((len + 1) * sizeof(char));
@@ -102,26 +106,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	sub[len] = 0;
 	return (sub);
 }
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*rtn;
-	size_t	i;
-
-	if (!s)
-		return (NULL);
-	if ((size_t)start > ft_strlen(s))
-		return (ft_strdup(""));
-	rtn = malloc(sizeof(char) * (len + 1));
-	i = 0;
-	if (!rtn)
-		return (0);
-	while (i < len)
-	{
-		rtn[i] = *(s + start + i);
-		i++;
-	}
-	rtn[i] = '\0';
-	return (rtn);
-}
-
