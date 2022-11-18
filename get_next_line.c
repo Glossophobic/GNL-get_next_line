@@ -6,18 +6,18 @@
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 17:06:56 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/16 20:19:00 by oubelhaj         ###   ########.fr       */
+/*   Updated: 2022/11/18 01:36:41 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*fnc(int fd, char **saved, char *line, char *tmp, char *buff)
+char	*fill_and_join(int fd, char **saved, char *line, char *tmp)
 {
 	while (!ft_strchr(*saved, '\n'))
 	{
-		buff = fill_buff(&fd);
-		if (!buff)
+		tmp = fill_buff(&fd);
+		if (!tmp)
 		{
 			if (fd == -1)
 			{
@@ -29,46 +29,43 @@ char	*fnc(int fd, char **saved, char *line, char *tmp, char *buff)
 			*saved = NULL;
 			return (line);
 		}
-		*saved = ft_strjoin(*saved, buff);
-		free(buff);
+		*saved = ft_strjoin(*saved, tmp);
+		free(tmp);
 	}
 	line = ft_substr(*saved, 0, ft_strchr(*saved, '\n') - *saved + 1);
 	tmp = *saved;
-	*saved = ft_substr(ft_strchr(*saved, '\n') + 1, 0, ft_strlen(ft_strchr(*saved, '\n')));
+	*saved = ft_substr(ft_strchr(*saved, '\n') + 1, 0,
+			ft_strlen(ft_strchr(*saved, '\n')));
 	free(tmp);
 	return (line);
 }
 
-#include <string.h>
 char	*get_next_line(int fd)
 {
 	char		*tmp;
 	char		*line;
-	char		*buff;
 	static char	*saved[OPEN_MAX];
-	
-	buff = NULL;
+
 	tmp = NULL;
 	line = NULL;
-
-	if (read(fd, NULL, 0) == -1 || BUFFER_SIZE <= 0) // to check if the fd is valid
+	if (read(fd, NULL, 0) == -1 || BUFFER_SIZE <= 0)
 	{
-		if (fd != -1)
-			free(saved[fd]); // free stuff from previous callsc
+		if (fd != -1) // fd which is not open
+			free(saved[fd]);
 		saved[fd] = NULL;
 		return (NULL);
 	}
-	return (fnc(fd, &saved[fd], line, tmp, buff));
+	return (fill_and_join(fd, &saved[fd], line, tmp));
 }
-int main()
-{
-	int fd = open("sekiro.txt", O_RDONLY);
 
-	char *s;
-	s = get_next_line(fd);
-	printf("%s", s);
-	free(s);
-	s = get_next_line(fd);
-	printf("%s", s);
-	free(s);
-}
+// int main()
+// {
+// 	int fd = open("sekiro.txt", O_RDONLY);
+// 	char *s;
+// 	s = get_next_line(fd);
+// 	printf("%s", s);
+// 	free(s);
+// 	s = get_next_line(fd);
+// 	printf("%s", s);
+// 	free(s);
+// }

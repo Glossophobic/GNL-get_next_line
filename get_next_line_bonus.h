@@ -6,7 +6,7 @@
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 20:00:11 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/16 20:14:19 by oubelhaj         ###   ########.fr       */
+/*   Updated: 2022/11/17 18:24:07 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 # include <string.h>
 
 char	*fill_buff(int *fd);
-size_t	ft_strlen(const char *str);
 char	*get_next_line(int fd);
 char	*ft_get_line(char *save);
+size_t	ft_strlen(const char *str);
 char	*ft_strchr(char *buff, char c);
 char	*ft_strjoin(char *s1, char const *s2);
 void	*ft_memcpy(void *dst, const void *src, size_t n);

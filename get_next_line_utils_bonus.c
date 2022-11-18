@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line__utils_bonus.c                       :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 20:00:24 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/16 20:00:32 by oubelhaj         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:05:43 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*fill_buff(int *fd)
 		buff[rd_bytes] = '\0';
 		return (buff);
 	}
-	if(rd_bytes < 0)
+	if (rd_bytes < 0)
 		*fd = -1;
 	free(buff);
 	return (NULL);
