@@ -6,25 +6,19 @@
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 19:59:39 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/18 01:38:02 by oubelhaj         ###   ########.fr       */
+/*   Updated: 2022/11/18 19:00:16 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*fill_and_join(int fd, char **saved, char *line, char *tmp) // double pointer
+char	*fill_and_join(int fd, char **saved, char *line, char *tmp)
 {
 	while (!ft_strchr(*saved, '\n'))
 	{
-		tmp = fill_buff(&fd);
+		tmp = fill_buff(fd);
 		if (!tmp)
 		{
-			if (fd == -1)
-			{
-				free(*saved); // this
-				*saved = NULL;
-				return (NULL);
-			}
 			line = *saved;
 			*saved = NULL;
 			return (line);
@@ -48,10 +42,9 @@ char	*get_next_line(int fd)
 
 	tmp = NULL;
 	line = NULL;
-	if (read(fd, NULL, 0) == -1) // this
+	if (read(fd, NULL, 0) == -1 || BUFFER_SIZE <= 0)
 	{
-		if (fd != -1)
-			free(saved[fd]);
+		free(saved[fd]);
 		saved[fd] = NULL;
 		return (NULL);
 	}

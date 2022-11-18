@@ -6,7 +6,7 @@
 /*   By: oubelhaj <oubelhaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:49:57 by oubelhaj          #+#    #+#             */
-/*   Updated: 2022/11/17 20:46:00 by oubelhaj         ###   ########.fr       */
+/*   Updated: 2022/11/18 18:34:36 by oubelhaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,18 @@ char	*ft_strjoin(char *s1, char const *s2)
 	return (str);
 }
 
-char	*fill_buff(int *fd)
+char	*fill_buff(int fd)
 {
 	char	*buff;
 	ssize_t	rd_bytes;
 
 	buff = malloc(BUFFER_SIZE + 1);
-	rd_bytes = read(*fd, buff, BUFFER_SIZE);
+	rd_bytes = read(fd, buff, BUFFER_SIZE);
 	if (rd_bytes > 0)
 	{
 		buff[rd_bytes] = '\0';
 		return (buff);
 	}
-	if (rd_bytes < 0)
-		*fd = -1;
 	free(buff);
 	return (NULL);
 }
