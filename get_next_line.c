@@ -50,15 +50,3 @@ char	*get_next_line(int fd)
 	}
 	return (fill_and_join(fd, &saved[fd], line, tmp));
 }
-
-// int main()
-// {
-// 	int fd = open("sekiro.txt", O_RDONLY);
-// 	char *s;
-// 	s = get_next_line(fd);
-// 	printf("%s", s);
-// 	free(s);
-// 	s = get_next_line(fd);
-// 	printf("%s", s);
-// 	free(s);
-// }
